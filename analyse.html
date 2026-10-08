@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Votre coach</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap">
+<style>
+/* Concept : une lettre qu'on s'apprête à recevoir. Le loupe-ronde rappelle le regard fin du coach. */
+:root{
+  --bg:#EDEFE6; --surface:#F7F8F2; --ink:#1F2A22; --muted:#525D4C;
+  --sage:#8FA383; --sage-deep:#3E5A45; --gold:#B8893B; --gold-ink:#86601F; --line:rgba(31,42,34,.14);
+  --f-display:"Cormorant Garamond",Georgia,serif; --f-body:"DM Sans",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121813; --surface:#1A221B; --ink:#E9ECE2; --muted:#A9B3A1; --sage:#7E9673; --sage-deep:#B4CBA9; --gold:#D7AE62; --gold-ink:#E2BE7A; --line:rgba(233,236,226,.14); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121813; --surface:#1A221B; --ink:#E9ECE2; --muted:#A9B3A1; --sage:#7E9673; --sage-deep:#B4CBA9; --gold:#D7AE62; --gold-ink:#E2BE7A; --line:rgba(233,236,226,.14); color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);line-height:1.65;padding-inline:16px;padding-block:32px 64px}
+.wrap{max-width:640px;margin-inline:auto;display:grid;gap:28px}
+.brand{font-family:var(--f-display);font-size:1.25rem;font-weight:500}
+.eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
+h1{font-family:var(--f-display);font-weight:400;font-size:clamp(2.2rem,1.6rem + 2.6vw,3.4rem);line-height:1.05;margin:6px 0 0;text-wrap:balance}
+h1 em{color:var(--gold-ink)}
+.lede{font-size:1.1rem;color:var(--muted);max-width:52ch}
+.lens{width:88px;height:88px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center}
+.lens span{width:40px;height:40px;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--gold),var(--sage));animation:focus 6s ease-in-out infinite}
+@keyframes focus{0%,100%{transform:scale(1);opacity:.75}50%{transform:scale(1.35);opacity:1}}
+@media (prefers-reduced-motion: reduce){.lens span{animation:none}}
+.gets{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.gets li{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;padding-top:14px;border-top:1px solid var(--line)}
+.gets b{font-family:var(--f-display);font-size:1.25rem;font-weight:500;display:block;line-height:1.3}
+.gets span.n{font-family:var(--f-display);font-size:1.4rem;color:var(--gold-ink);line-height:1.2}
+.gets p{margin:2px 0 0;color:var(--muted);font-size:.95rem}
+form{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px 20px;display:grid;gap:18px}
+label.lbl{font-weight:600;font-size:.95rem;display:block;margin-bottom:6px}
+input[type=email]{width:100%;min-width:0;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:.85rem;color:var(--muted)}
+.consent input{margin-top:4px;accent-color:var(--sage-deep)}
+button{min-height:52px;border:none;border-radius:999px;background:var(--sage-deep);color:var(--bg);font:600 1rem var(--f-body);cursor:pointer}
+button[disabled]{opacity:.6}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.msg{min-height:1.4em;font-size:.95rem;color:var(--sage-deep)}
+.notice{font-size:.8rem;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+a{color:var(--sage-deep)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <span class="brand">Sublimer son quotidien</span>
+
+  <header style="display:grid;gap:18px">
+    <div class="lens" aria-hidden="true"><span></span></div>
+    <div>
+      <span class="eyebrow">Votre coach · une analyse offerte</span>
+      <h1>Ce que vos journées <em>disent de vous.</em></h1>
+    </div>
+    <p class="lede">Vous avez noté vos gestes, vos ressentis, vos pensées. Votre coach les relit ensemble et vous montre ce qui se dessine, avec vos propres mots. Elle arrive par e-mail en quelques minutes.</p>
+  </header>
+
+  <ul class="gets">
+    <li><span class="n">1</span><div><b>Ce que je remarque</b><p>Des observations précises, tirées de ce que vous avez écrit.</p></div></li>
+    <li><span class="n">2</span><div><b>Le fil qui revient</b><p>La pensée qui revient d'un jour à l'autre, et une autre façon de la regarder.</p></div></li>
+    <li><span class="n">3</span><div><b>Votre ressenti</b><p>Comment vos notes du soir ont évolué depuis le jour 1.</p></div></li>
+    <li><span class="n">4</span><div><b>Votre geste sur mesure</b><p>Un geste pour les jours qui viennent, choisi pour vous à partir de votre quotidien.</p></div></li>
+  </ul>
+
+  <form id="f" novalidate>
+    <div>
+      <label class="lbl" for="email">Votre e-mail d'inscription</label>
+      <input type="email" id="email" autocomplete="email" placeholder="votre@adresse.fr">
+    </div>
+    <label class="consent"><input type="checkbox" id="consent"> J'accepte que mes fiches du jour soient analysées par une intelligence artificielle pour recevoir cette analyse par e-mail. Elles ne sont ni publiées ni partagées.</label>
+    <button type="submit" id="go">Recevoir mon analyse</button>
+    <p class="msg" id="msg" role="status"></p>
+  </form>
+
+  <p class="notice">L'analyse est produite par une intelligence artificielle dans une démarche de développement personnel. Elle ne remplace ni un avis médical ni un suivi psychologique ou thérapeutique. Pas encore de fiche remplie ? <a href="journal.html">Notez votre journée</a> d'abord.</p>
+</div>
+
+<script>
+const WEBHOOK_URL = 'https://n8n.srv999617.hstgr.cloud/webhook/sublimer-analyse';
+(function(){
+  const $ = id => document.getElementById(id);
+  try { const e = localStorage.getItem('ssq_email'); if (e) $('email').value = e; } catch (err) {}
+  const MSG = {
+    envoyee: "C'est parti. Votre coach relit vos fiches : l'analyse arrive dans votre boîte mail d'ici quelques minutes.",
+    inconnu: "Cette adresse n'est pas inscrite au programme. Vérifiez qu'il s'agit bien de l'e-mail utilisé à l'inscription.",
+    vide: "Votre coach n'a encore aucune fiche à lire. Remplissez au moins une fiche du jour, puis revenez.",
+    deja_utilisee: "Votre analyse offerte a déjà été envoyée. Retrouvez-la dans votre boîte mail ; le coach perso vous accompagne ensuite chaque semaine.",
+    email_invalide: "Cette adresse ne semble pas complète. Vérifiez-la et réessayez."
+  };
+  $('f').addEventListener('submit', async ev => {
+    ev.preventDefault();
+    const email = $('email').value.trim(), msg = $('msg'), btn = $('go');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = MSG.email_invalide; $('email').focus(); return; }
+    if (!$('consent').checked) { msg.textContent = "Cochez la case d'accord pour que votre coach puisse lire vos fiches."; return; }
+    btn.disabled = true; btn.textContent = 'Envoi…'; msg.textContent = '';
+    try { localStorage.setItem('ssq_email', email); } catch (err) {}
+    try {
+      const res = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, consent: true }) });
+      const data = await res.json().catch(() => ({}));
+      msg.textContent = MSG[data.statut] || MSG[data.error] || "La demande n'a pas abouti. Réessayez dans un instant.";
+    } catch (err) {
+      msg.textContent = "Connexion impossible pour le moment. Réessayez dans un instant.";
+    } finally { btn.disabled = false; btn.textContent = 'Recevoir mon analyse'; }
+  });
+})();
+</script>
+
+</body>
+</html>
