@@ -400,6 +400,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
     <button class="btn btn-primary" type="submit">Recevoir mes 21 jours offerts</button>
   </form>
   <p class="form-msg" id="formMsg" role="status"></p>
+  <a class="btn btn-ghost" id="agendaLink" href="agenda.html" hidden>Ajouter mes 21 rituels à mon agenda</a>
 </section>
 
 </main>
@@ -448,6 +449,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.ok) {
         msg.textContent = "Merci, c'est noté. Le rituel du jour 1 arrive dans votre boîte mail.";
+        document.getElementById('agendaLink').hidden = false;
         form.reset();
       } else if (data.error === 'email_invalide') {
         msg.textContent = "Cette adresse n'a pas été acceptée. Vérifiez-la et réessayez.";
