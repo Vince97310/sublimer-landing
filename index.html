@@ -442,7 +442,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
   <form class="signup" id="signup" novalidate>
     <label for="email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Adresse e-mail</label>
     <input id="email" name="email" type="email" autocomplete="email" placeholder="votre@adresse.fr" required>
-    <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label for="site_web">Ne pas remplir</label><input id="site_web" name="site_web" type="text" tabindex="-1" autocomplete="off"></div>
+    <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label for="ssq_conf">Laisser vide</label><input id="ssq_conf" name="ssq_conf" type="text" tabindex="-1" autocomplete="new-password" data-lpignore="true" data-1p-ignore></div>
     <button class="btn btn-primary" type="submit">Faire mon premier pas</button>
   </form>
   <p class="form-msg" id="formMsg" role="status"></p>
@@ -491,15 +491,18 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
       const res = await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: v, source: 'landing-v2', hp: form.site_web ? form.site_web.value : '', dt: Date.now() - T0 })
+        body: JSON.stringify({ email: v, source: 'landing-v2', hp: form.ssq_conf ? form.ssq_conf.value : '', dt: Date.now() - T0 })
       });
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.ok) {
-        msg.textContent = "Merci, c'est noté. Le rituel du jour 1 arrive dans votre boîte mail.";
+        msg.textContent = "Merci, c'est noté. Votre premier pas arrive dans votre boîte mail dans quelques instants.";
         document.getElementById('agendaLink').hidden = false;
         form.reset();
       } else if (data.error === 'email_invalide') {
-        msg.textContent = "Cette adresse n'a pas été acceptée. Vérifiez-la et réessayez.";
+        msg.textContent = "Cette adresse e-mail ne semble pas valide. Vérifiez-la (exemple : prenom@domaine.fr) et réessayez.";
+        form.email.focus();
+      } else if (data.error === 'verification') {
+        msg.textContent = "L'envoi n'a pas pu être vérifié. Rechargez la page, puis réessayez dans quelques secondes.";
       } else {
         msg.textContent = "L'inscription n'a pas abouti. Réessayez dans un instant.";
       }
