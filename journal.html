@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fiche du jour</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap">
+<style>
+/* Concept : une page de carnet, calme, centrée sur un seul jour et un seul geste */
+:root{
+  --bg:#EDEFE6; --surface:#F7F8F2; --ink:#1F2A22; --muted:#525D4C;
+  --sage:#8FA383; --sage-deep:#3E5A45; --gold:#B8893B; --gold-ink:#86601F; --line:rgba(31,42,34,.14);
+  --f-display:"Cormorant Garamond",Georgia,serif; --f-body:"DM Sans",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121813; --surface:#1A221B; --ink:#E9ECE2; --muted:#A9B3A1; --sage:#7E9673; --sage-deep:#B4CBA9; --gold:#D7AE62; --gold-ink:#E2BE7A; --line:rgba(233,236,226,.14); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121813; --surface:#1A221B; --ink:#E9ECE2; --muted:#A9B3A1; --sage:#7E9673; --sage-deep:#B4CBA9; --gold:#D7AE62; --gold-ink:#E2BE7A; --line:rgba(233,236,226,.14); color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);line-height:1.65;padding-inline:16px;padding-block:32px 64px}
+.wrap{max-width:640px;margin-inline:auto;display:grid;gap:28px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-size:1.25rem;font-weight:500}
+.nav{display:flex;gap:8px}
+.nav a{min-width:44px;min-height:44px;display:inline-grid;place-items:center;border:1px solid var(--line);border-radius:999px;color:var(--ink);text-decoration:none;padding:0 14px;font-size:.9rem}
+.nav a[aria-disabled="true"]{opacity:.35;pointer-events:none}
+.eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
+h1{font-family:var(--f-display);font-weight:400;font-size:clamp(2.2rem,1.6rem + 2.6vw,3.4rem);line-height:1.05;margin:6px 0 0;text-wrap:balance}
+.geste{color:var(--gold-ink);font-size:.95rem;margin-top:6px}
+.pratique{font-size:1.1rem}
+.soir{border-left:2px solid var(--gold);padding-left:14px;font-family:var(--f-display);font-size:1.3rem;line-height:1.4}
+.dots{display:flex;gap:6px;flex-wrap:wrap}
+.dots span{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.dots span.past{background:var(--sage)}
+.dots span.now{background:var(--gold);transform:scale(1.3)}
+form{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px 20px;display:grid;gap:20px}
+fieldset{border:none;margin:0;padding:0;display:grid;gap:10px}
+legend,label.lbl{font-weight:600;font-size:.95rem;margin-bottom:6px}
+.choices{display:flex;flex-wrap:wrap;gap:8px}
+.choices label{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid var(--line);border-radius:999px;cursor:pointer}
+.choices input{accent-color:var(--sage-deep)}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.scale label{min-height:48px;display:grid;place-items:center;border:1px solid var(--line);border-radius:12px;cursor:pointer;font-variant-numeric:tabular-nums;text-align:center;font-size:.85rem}
+.scale input{position:absolute;opacity:0;pointer-events:none}
+.scale input:checked + span{color:var(--bg)}
+.scale label:has(input:checked){background:var(--sage-deep);border-color:var(--sage-deep)}
+.scale-legend{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted)}
+textarea,input[type=email]{width:100%;min-width:0;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+textarea{min-height:110px;resize:vertical}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.hint{font-size:.85rem;color:var(--muted)}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:.85rem;color:var(--muted)}
+.consent input{margin-top:4px;accent-color:var(--sage-deep)}
+button{min-height:52px;border:none;border-radius:999px;background:var(--sage-deep);color:var(--bg);font:600 1rem var(--f-body);cursor:pointer}
+button[disabled]{opacity:.6}
+.msg{min-height:1.4em;font-size:.95rem;color:var(--sage-deep)}
+.notice{font-size:.8rem;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="top">
+    <span class="brand">Sublimer son quotidien</span>
+    <nav class="nav" aria-label="Changer de jour">
+      <a id="prev" href="#">Jour précédent</a>
+      <a id="next" href="#">Jour suivant</a>
+    </nav>
+  </div>
+
+  <header>
+    <span class="eyebrow" id="meta">Jour 1 sur 21 · Clé 1 : Le souffle</span>
+    <h1 id="titre">Le premier verre d'eau</h1>
+    <p class="geste" id="geste">Le geste du jour : Le réveil</p>
+  </header>
+
+  <div class="dots" id="dots" aria-hidden="true"></div>
+
+  <p class="pratique" id="pratique"></p>
+  <p class="soir" id="soir"></p>
+
+  <form id="fiche" novalidate>
+    <fieldset>
+      <legend>Avez-vous pratiqué aujourd'hui ?</legend>
+      <div class="choices">
+        <label><input type="radio" name="fait" value="oui" id="fait-oui"> Oui</label>
+        <label><input type="radio" name="fait" value="en partie" id="fait-partie"> En partie</label>
+        <label><input type="radio" name="fait" value="pas encore" id="fait-non"> Pas encore</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Comment vous sentez-vous ce soir ?</legend>
+      <div class="scale">
+        <label><input type="radio" name="ressenti" value="1" id="r1"><span>1</span></label>
+        <label><input type="radio" name="ressenti" value="2" id="r2"><span>2</span></label>
+        <label><input type="radio" name="ressenti" value="3" id="r3"><span>3</span></label>
+        <label><input type="radio" name="ressenti" value="4" id="r4"><span>4</span></label>
+        <label><input type="radio" name="ressenti" value="5" id="r5"><span>5</span></label>
+      </div>
+      <div class="scale-legend"><span>Agité</span><span>Apaisé</span></div>
+    </fieldset>
+
+    <div>
+      <label class="lbl" for="remarque" id="q-soir">Votre réponse à la question du soir</label>
+      <textarea id="remarque" name="remarque" placeholder="Quelques mots suffisent."></textarea>
+    </div>
+
+    <div>
+      <label class="lbl" for="pensees">Les pensées que vous avez remarquées</label>
+      <textarea id="pensees" name="pensees" placeholder="Ce qui revenait, ce qui pesait, ce qui s'est allégé…"></textarea>
+      <p class="hint">Pas besoin de bien écrire. Remarquer suffit.</p>
+    </div>
+
+    <div>
+      <label class="lbl" for="email">Votre e-mail d'inscription</label>
+      <input type="email" id="email" name="email" autocomplete="email" placeholder="votre@adresse.fr">
+      <p class="hint">Mémorisé sur cet appareil pour les prochains jours.</p>
+    </div>
+
+    <label class="consent"><input type="checkbox" id="consent"> J'accepte que mes notes soient enregistrées pour suivre mon parcours et recevoir des retours personnalisés. Elles ne sont ni publiées ni partagées.</label>
+
+    <button type="submit" id="send">Enregistrer ma journée</button>
+    <p class="msg" id="msg" role="status"></p>
+  </form>
+
+  <p class="notice">Ce programme est une démarche de développement personnel. Il ne remplace ni un avis médical ni un suivi psychologique ou thérapeutique.</p>
+</div>
+
+<script>
+const DATA = {"cles":{"1":"Le souffle","2":"Le silence","3":"L'accueil"},"jours":[{"j":1,"cle":1,"titre":"Le premier verre d'eau","geste":"Le réveil","pratique":"Demain matin, avant votre téléphone, servez-vous un verre d'eau. Asseyez-vous. Avant de boire, trois respirations lentes, en sentant l'air entrer et sortir. Puis buvez, doucement.","soir":"Comment ces trois respirations ont-elles coloré votre matinée ?"},{"j":2,"cle":1,"titre":"Chaque porte est un seuil","geste":"Ouvrir une porte","pratique":"Aujourd'hui, chaque fois que votre main se pose sur une poignée, faites une respiration complète avant d'ouvrir. La porte de la maison, du bureau, de la voiture. Rien à ajouter à votre journée : les portes sont déjà là.","soir":"Combien de portes avez-vous vraiment franchies aujourd'hui ?"},{"j":3,"cle":1,"titre":"L'attente devient un cadeau","geste":"Attendre","pratique":"Un feu rouge, une file, une page qui charge. Ces secondes qu'on subit, offrez-les à votre souffle : inspirez sur 4 temps, expirez sur 6. L'expiration plus longue que l'inspiration apaise le corps.","soir":"Une attente vous a-t-elle paru différente aujourd'hui ?"},{"j":4,"cle":1,"titre":"Deux minutes de fraîcheur","geste":"Se brosser les dents","pratique":"Pendant le brossage, respirez uniquement par le nez. Sentez l'air frais, le goût, le geste de la main. Deux minutes où rien d'autre n'existe.","soir":"Qu'avez-vous remarqué que vous ne remarquiez plus ?"},{"j":5,"cle":1,"titre":"Avant de répondre","geste":"Le téléphone qui sonne","pratique":"Quand votre téléphone sonne ou vibre, laissez passer une respiration avant de décrocher ou de lire. Juste une. Vous répondez alors depuis vous, pas depuis l'urgence.","soir":"Qu'est-ce que cette respiration a changé dans vos échanges ?","teaser":"Gardez un œil sur votre boîte dans deux jours : au bout de la première semaine, une porte s'ouvre pour ceux qui ont fait le chemin."},{"j":6,"cle":1,"titre":"Le souffle qui marche","geste":"Marcher","pratique":"Sur un trajet à pied, même court, accordez votre souffle à vos pas : trois pas en inspirant, quatre pas en expirant. Le corps trouve son rythme, l'esprit le suit.","soir":"Où vos pas vous ont-ils menés, au-dedans ?"},{"j":7,"cle":1,"titre":"La première clé est à vous","geste":"Se coucher","pratique":"Allongé, une main sur le ventre, trois respirations. Sentez le ventre monter et descendre. Vous venez de passer sept jours à revenir à vous par le souffle. Il vous accompagnera partout, puisqu'il ne vous quitte jamais.","soir":"Qu'est-ce qui a changé en sept jours, même légèrement ?","offre":true},{"j":8,"cle":2,"titre":"Remarquer ce qui passe","geste":"La douche","pratique":"Sous la douche, les pensées défilent : la liste du jour, une conversation, un souci. Méditer, c'est simplement les remarquer. Dites intérieurement « pensée », puis revenez à la sensation de l'eau.","soir":"Combien de fois êtes-vous revenu à l'eau ?"},{"j":9,"cle":2,"titre":"Le bruit et le silence","geste":"Faire la vaisselle","pratique":"Faites la vaisselle sans musique, sans écran. Écoutez l'eau, les assiettes. Et remarquez le bruit mental qui veut remplir le silence. Vous n'avez pas à le faire taire : seulement à le voir.","soir":"De quoi parlait votre bruit mental aujourd'hui ?"},{"j":10,"cle":2,"titre":"Les pensées comme des voitures","geste":"Le trajet","pratique":"Cinq minutes de trajet sans radio ni podcast. Regardez vos pensées passer comme des voitures sur une route : vous les voyez arriver, passer, s'éloigner. Vous n'êtes pas obligé de monter dedans.","soir":"Dans quelle « voiture » êtes-vous monté sans le vouloir ?"},{"j":11,"cle":2,"titre":"Écouter jusqu'au bout","geste":"Demander des nouvelles","pratique":"Quand vous demandez « ça va ? », faites silence en vous pendant la réponse. Pas de réplique préparée, pas de pensée parallèle. Écoutez jusqu'au dernier mot.","soir":"Qu'avez-vous entendu que vous n'auriez pas entendu hier ?"},{"j":12,"cle":2,"titre":"Ne faire qu'une chose","geste":"Boire son café ou son thé","pratique":"Buvez votre café ou votre thé sans rien faire d'autre. Pas de lecture, pas d'écran. La chaleur de la tasse, l'odeur, le goût. Quand une pensée arrive, remarquez-la, et revenez à la tasse.","soir":"Ce café avait-il le même goût que d'habitude ?"},{"j":13,"cle":2,"titre":"L'impatience est une pensée","geste":"Faire la queue","pratique":"Dans une file d'attente, remarquez l'impatience quand elle monte. Nommez-la : « impatience ». Elle est une pensée qui passe, pas ce que vous êtes. Respirez, et regardez-la se dissoudre.","soir":"Quelle émotion avez-vous su regarder sans la suivre ?"},{"j":14,"cle":2,"titre":"Une minute de silence","geste":"Avant de dormir","pratique":"Assis au bord du lit, une minute de silence. Pas pour bien faire, juste pour être là. Deux clés sont maintenant entre vos mains : le souffle qui ramène à soi, le silence qui montre ce qui se passe en soi.","soir":"Que vous a appris cette semaine de silence ?"},{"j":15,"cle":3,"titre":"Un sourire à soi","geste":"Le miroir du matin","pratique":"Devant le miroir, offrez-vous un demi-sourire. Pas pour juger ce que vous voyez, juste pour accueillir la personne en face. Telle qu'elle est ce matin.","soir":"Qu'avez-vous ressenti en vous souriant ?"},{"j":16,"cle":3,"titre":"Léger et souple","geste":"Être assis","pratique":"À chaque heure passée assis, vérifiez trois points : épaules relâchées, mâchoire déliée, dos souple. La posture d'accueil commence dans le corps : léger, détendu, disponible.","soir":"Où votre corps retenait-il le plus de tension ?"},{"j":17,"cle":3,"titre":"Sourire des yeux","geste":"Dire bonjour","pratique":"Aujourd'hui, chaque bonjour s'accompagne d'un regard et d'un léger sourire des yeux. Vous accueillez l'autre comme vous avez appris à vous accueillir.","soir":"Un bonjour vous a-t-il été rendu différemment ?"},{"j":18,"cle":3,"titre":"Les paumes ouvertes","geste":"Une contrariété","pratique":"Quand quelque chose vous contrarie, ouvrez les paumes, discrètement. Une respiration. Puis intérieurement : « j'accueille ». Accueillir n'est pas approuver : c'est cesser de lutter contre ce qui est déjà là.","soir":"Qu'est-ce qui s'est desserré en vous ?"},{"j":19,"cle":3,"titre":"Des gestes qui dansent","geste":"Cuisiner","pratique":"En cuisinant, ralentissez un peu. Des gestes souples, ronds, attentifs. Couper, verser, remuer : le quotidien devient une danse légère. Le normal devient génial.","soir":"Quel geste banal vous a paru beau aujourd'hui ?"},{"j":20,"cle":3,"titre":"Appartenir au vivant","geste":"Sortir dehors","pratique":"Dehors, levez le regard : le ciel, un arbre, la lumière. Respirez. Vous faites partie de ce vivant-là, de quelque chose de plus grand que vos soucis du jour. Laissez-vous le sentir.","soir":"Qu'avez-vous vu en levant les yeux ?"},{"j":21,"cle":3,"titre":"La pause des trois clés","geste":"N'importe quel moment","pratique":"Une respiration pour revenir à vous. Un instant de silence pour remarquer ce qui se passe. Un sourire pour accueillir. Trois secondes, n'importe où, n'importe quand. C'est à vous désormais : parfaitement imparfait, et imparfaitement parfait.","soir":"Comment regardez-vous le monde aujourd'hui, comparé au premier jour ?"}]};
+const WEBHOOK_URL = 'https://n8n.srv999617.hstgr.cloud/webhook/sublimer-journal';
+(function(){
+  const params = new URLSearchParams(location.search);
+  let j = parseInt(params.get('j') || (location.hash.replace('#j','')) || '1', 10);
+  if (!(j >= 1 && j <= 21)) j = 1;
+  const d = DATA.jours[j - 1];
+  const $ = id => document.getElementById(id);
+  document.title = 'Jour ' + j + ' · ' + d.titre;
+  $('meta').textContent = 'Jour ' + j + ' sur 21 · Clé ' + d.cle + ' : ' + DATA.cles[String(d.cle)];
+  $('titre').textContent = d.titre;
+  $('geste').textContent = 'Le geste du jour : ' + d.geste;
+  $('pratique').textContent = d.pratique;
+  $('soir').textContent = d.soir;
+  $('q-soir').textContent = d.soir;
+  const dots = $('dots');
+  for (let i = 1; i <= 21; i++) { const s = document.createElement('span'); if (i < j) s.className = 'past'; if (i === j) s.className = 'now'; dots.appendChild(s); }
+  const link = n => '?j=' + n;
+  $('prev').href = link(j - 1); if (j <= 1) $('prev').setAttribute('aria-disabled', 'true');
+  $('next').href = link(j + 1); if (j >= 21) $('next').setAttribute('aria-disabled', 'true');
+
+  try { const e = localStorage.getItem('ssq_email'); if (e) $('email').value = e; } catch (err) {}
+
+  const form = $('fiche'), msg = $('msg'), btn = $('send');
+  form.addEventListener('submit', async ev => {
+    ev.preventDefault();
+    const email = $('email').value.trim();
+    const fait = (form.querySelector('input[name=fait]:checked') || {}).value || '';
+    const ressenti = (form.querySelector('input[name=ressenti]:checked') || {}).value || '';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "Indiquez l'adresse e-mail utilisée à l'inscription."; $('email').focus(); return; }
+    if (!fait) { msg.textContent = 'Dites-nous si vous avez pratiqué, même « pas encore ».'; return; }
+    if (!$('consent').checked) { msg.textContent = "Cochez la case d'accord pour que vos notes soient enregistrées."; return; }
+    btn.disabled = true; btn.textContent = 'Enregistrement…'; msg.textContent = '';
+    try { localStorage.setItem('ssq_email', email); } catch (err) {}
+    try {
+      const res = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, jour: j, cle: DATA.cles[String(d.cle)], fait, ressenti, remarque: $('remarque').value.trim(), pensees: $('pensees').value.trim() }) });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) {
+        msg.textContent = 'Votre journée est notée. Merci d\'avoir pris ce temps pour vous.';
+        $('remarque').value = ''; $('pensees').value = '';
+      } else {
+        msg.textContent = "L'enregistrement n'a pas abouti. Vérifiez votre e-mail et réessayez.";
+      }
+    } catch (err) {
+      msg.textContent = "Connexion impossible pour le moment. Vos notes sont toujours dans la page : réessayez dans un instant.";
+    } finally { btn.disabled = false; btn.textContent = 'Enregistrer ma journée'; }
+  });
+})();
+</script>
+
+</body>
+</html>
