@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sublimer son quotidien V2</title>
-<meta name="description" content="Programme de 21 jours pour transformer les gestes ordinaires en rituels conscients.">
-<meta property="og:title" content="Sublimer son quotidien — 21 jours de rituels">
-<meta property="og:description" content="Un geste sacré par jour, pendant 21 jours, pour habiter pleinement votre quotidien.">
+<meta name="description" content="Un pas, puis un pas : transformer les gestes ordinaires en rites conscients, jour après jour.">
+<meta property="og:title" content="Sublimer son quotidien — un pas, puis un pas">
+<meta property="og:description" content="Un geste par jour, glissé dans ce que vous faites déjà. Le chemin se révèle en se retournant.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap">
 <style>
 /* Concept : une page qui respire lentement — texte à gauche, sphère vivante à droite,
-   21 perles (une par jour) qui s'allument au fil du parcours. */
+   des perles qui apparaissent derrière chaque pas posé : le chemin se dessine en marchant. */
 :root{
   --bg:#EDEFE6; --surface:#F7F8F2; --ink:#1F2A22; --muted:#525D4C;
   --sage:#8FA383; --sage-deep:#3E5A45; --gold:#B8893B; --gold-ink:#86601F;
@@ -96,14 +96,32 @@ section{padding-block:var(--s7)}
 .week .eyebrow{display:block;margin-bottom:4px}
 .week h3{font-size:var(--t-xl)}
 .week p{color:var(--muted);max-width:46ch;margin-top:6px}
-.bar{height:3px;background:var(--line);border-radius:3px;overflow:hidden;max-width:420px}
-.bar i{display:block;height:100%;width:4.76%;background:var(--gold);transform-origin:left;transition:width .3s}
+.trail{display:flex;flex-wrap:wrap;gap:7px;max-width:420px;min-height:12px}
+.trail i{width:8px;height:12px;border-radius:50% 50% 45% 45%;background:var(--gold);opacity:.85;animation:step .5s var(--ease)}
+.trail i:nth-child(even){transform:translateY(5px);background:var(--sage)}
+@keyframes step{from{opacity:0;scale:.4}to{opacity:.85;scale:1}}
+.trail-end{margin-top:var(--s3);font-family:var(--f-display);font-style:italic;font-size:1.3rem;color:var(--gold-ink);opacity:0;transition:opacity .8s}
+.trail-end.on{opacity:1}
 @media (min-width:900px){
   .journey.pin{height:260vh}
   .journey.pin .journey-sticky{position:sticky;top:12vh;min-height:76vh;display:flex;align-items:center}
   .journey-inner{grid-template-columns:.8fr 1.2fr;align-items:center;width:100%}
 }
 
+/* Élan double */
+.elan-head{max-width:760px}
+.elan h2{font-size:var(--t-2xl);font-weight:400;margin-top:var(--s2)}
+.elan-head p{color:var(--muted);margin-top:var(--s4);max-width:60ch}
+.six{list-style:none;padding:0;margin:var(--s6) 0 0;display:grid;gap:var(--s3);grid-template-columns:repeat(2,minmax(0,1fr));counter-reset:pas}
+@media (min-width:820px){.six{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.six li{counter-increment:pas;display:grid;gap:4px;align-content:start;padding-top:var(--s3);border-top:1px solid var(--line)}
+.six li::before{content:counter(pas);font-family:var(--f-display);font-size:2rem;line-height:1;color:var(--gold-ink)}
+.six b{font-family:var(--f-display);font-size:1.35rem;font-weight:500}
+.six span{color:var(--muted);font-size:.92rem}
+.reward{margin-top:var(--s6);padding:var(--s5) var(--s4);border-radius:var(--r);background:var(--sage-deep);color:var(--bg);max-width:900px;display:grid;gap:var(--s2)}
+.reward .eyebrow{color:color-mix(in srgb,var(--bg) 75%,transparent)}
+.reward p{font-family:var(--f-display);font-size:clamp(1.4rem,1.15rem + 1vw,2rem);line-height:1.35;margin:0}
+.reward em{color:inherit;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:6px;text-decoration-thickness:1px}
 /* Analyse */
 .analysis{display:grid;gap:var(--s5);align-items:center}
 @media (min-width:900px){.analysis{grid-template-columns:1fr 1fr}}
@@ -208,14 +226,14 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
 
 <section class="hero" aria-labelledby="h-hero">
   <div class="hero-text">
-    <span class="eyebrow">Programme de 21 jours</span>
+    <span class="eyebrow">Un pas, puis un pas</span>
     <h1 id="h-hero">Faire de chaque jour <em>un rituel.</em></h1>
-    <p class="lede">Un geste conscient par jour, pendant 21 jours, pour transformer la routine en présence.</p>
+    <p class="lede">Un geste conscient aujourd'hui. Un autre demain. Petit à petit, la routine devient présence.</p>
     <div class="actions">
-      <a class="btn btn-primary" href="#inscription">Commencer mes 21 jours offerts</a>
+      <a class="btn btn-primary" href="#inscription">Faire mon premier pas</a>
       <a class="btn btn-ghost" href="#parcours">Voir le parcours</a>
     </div>
-    <p class="reassure"><strong style="color:var(--gold-ink)">Les 21 jours sont offerts</strong> · 10 à 15 minutes par jour, sans rien ajouter à votre agenda</p>
+    <p class="reassure"><strong style="color:var(--gold-ink)">Entièrement offert</strong> · Un geste par jour, glissé dans ce que vous faites déjà</p>
   </div>
 </section>
 
@@ -227,8 +245,8 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
   <div class="benefits">
     <article class="benefit lead reveal">
       <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 3c3 4 3 8 0 12-3-4-3-8 0-12z"/><path d="M5 14c2 4 5 6 7 7 2-1 5-3 7-7"/></svg>
-      <h3>Un ancrage qui tient dans la durée</h3>
-      <p>Vingt et un jours, c'est le temps qu'il faut pour qu'un geste cesse d'être un effort et devienne une habitude. Chaque jour s'appuie sur la veille.</p>
+      <h3>Petit à petit, sans effort</h3>
+      <p>Pas de grand objectif à tenir, pas de « plus tard ». Un geste minuscule aujourd'hui, qui s'appuie sur celui d'hier. C'est la répétition douce, pas la volonté, qui transforme.</p>
     </article>
     <article class="benefit reveal">
       <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg>
@@ -248,30 +266,51 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
     <div class="journey-inner">
       <div>
         <span class="eyebrow">Le parcours</span>
-        <div class="day-big" aria-live="polite"><span id="dayNum">01</span><small>jour sur 21</small></div>
-        <div class="bar" aria-hidden="true"><i id="dayBar"></i></div>
+        <div class="day-big" aria-live="polite"><span id="dayNum">01</span><small id="dayLbl">pas posé</small></div>
+        <div class="trail" id="trail" aria-hidden="true"></div>
+        <p class="trail-end" id="trailEnd">Retournez-vous : le chemin est là.</p>
       </div>
       <div>
         <h2 id="h-journey" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Trois semaines, trois clés</h2>
         <ol class="weeks">
           <li class="week on" data-week="1">
-            <span class="eyebrow">Jours 1 à 7</span>
+            <span class="eyebrow">Les premiers pas</span>
             <h3>Clé 1 : le souffle</h3>
             <p>Revenir à soi par la respiration. Une porte, un feu rouge, le brossage des dents deviennent des rendez-vous avec vous-même.</p>
           </li>
           <li class="week" data-week="2">
-            <span class="eyebrow">Jours 8 à 14</span>
+            <span class="eyebrow">En marche</span>
             <h3>Clé 2 : le silence</h3>
             <p>Méditer, c'est remarquer ses pensées. Sous la douche, à la vaisselle, en écoutant quelqu'un : voir le bruit mental sans le suivre.</p>
           </li>
           <li class="week" data-week="3">
-            <span class="eyebrow">Jours 15 à 21</span>
+            <span class="eyebrow">Le chemin se révèle</span>
             <h3>Clé 3 : l'accueil</h3>
             <p>Une posture légère, souple, souriante. Accueillir ce qui est, soi compris, et se sentir appartenir à plus grand.</p>
           </li>
         </ol>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="elan" aria-labelledby="h-elan">
+  <div class="elan-head reveal">
+    <span class="eyebrow">L'élan double</span>
+    <h2 id="h-elan">Un pas vers le monde. <em>Six pas vers Soi.</em></h2>
+    <p>Il n'y a pas de ligne d'arrivée à fixer, pas de « je verrai plus tard ». Il y a ce pas-ci, aujourd'hui : un geste presque insignifiant, ouvrir une porte en respirant. Et ce petit pas posé dehors en déclenche six au-dedans.</p>
+  </div>
+  <ol class="six">
+    <li class="reveal"><b>Remarquer</b><span>ce que vous faisiez sans le voir</span></li>
+    <li class="reveal"><b>Respirer</b><span>et revenir dans votre corps</span></li>
+    <li class="reveal"><b>Ralentir</b><span>juste le temps d'un geste</span></li>
+    <li class="reveal"><b>Goûter</b><span>l'instant tel qu'il est</span></li>
+    <li class="reveal"><b>Accueillir</b><span>ce qui est là, vous compris</span></li>
+    <li class="reveal"><b>Revenir</b><span>à vous, encore, simplement</span></li>
+  </ol>
+  <div class="reward reveal">
+    <span class="eyebrow">La récompense</span>
+    <p>Un matin, vous vous retournerez, et le chemin sera là, tracé pas après pas. Le verre d'eau, la porte, le café, le bonjour : les mêmes gestes qu'avant, devenus des rites. <em>L'habitude machinale s'est transmutée en rite sacré.</em></p>
   </div>
 </section>
 
@@ -346,11 +385,11 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
       <h3>Le parcours</h3>
       <p class="price">0 €</p>
       <ul>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><span>Les 21 jours, un rituel chaque matin</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><span>Un rituel chaque matin, un pas à la fois</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><span>La fiche du jour pour noter ce qui change</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><span>Les 3 clés : souffle, silence, accueil</span></li>
       </ul>
-      <a class="btn btn-ghost" href="#inscription">Commencer mes 21 jours offerts</a>
+      <a class="btn btn-ghost" href="#inscription">Faire mon premier pas</a>
     </article>
     <article class="plan featured reveal">
       <span class="badge">Une analyse offerte au jour 5</span>
@@ -359,7 +398,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
       <ul>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><span>Votre coach relit vos fiches chaque semaine</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><span>Une analyse fine, avec vos propres mots : ce qui revient, ce qui change</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><span>Un geste sur mesure chaque semaine et le bilan de vos 21 jours</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><span>Un geste sur mesure chaque semaine et le bilan du chemin parcouru</span></li>
       </ul>
       <a class="btn btn-primary" href="#inscription">Commencer, et l'essayer au jour 5</a>
     </article>
@@ -386,21 +425,21 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
   <div class="qa"><button type="button" aria-expanded="false" aria-controls="a1" id="q1">Combien de temps faut-il chaque jour ?<svg class="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><div class="answer" id="a1" role="region" aria-labelledby="q1" hidden>Entre 10 et 15 minutes : le rituel lui-même, puis quelques lignes dans le journal le soir.</div></div>
   <div class="qa"><button type="button" aria-expanded="false" aria-controls="a2" id="q2">Que se passe-t-il si je manque un jour ?<svg class="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><div class="answer" id="a2" role="region" aria-labelledby="q2" hidden>Rien de grave. Vous reprenez là où vous vous êtes arrêté. Le parcours suit votre rythme, pas le calendrier.</div></div>
   <div class="qa"><button type="button" aria-expanded="false" aria-controls="a3" id="q3">Faut-il une pratique spirituelle particulière ?<svg class="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><div class="answer" id="a3" role="region" aria-labelledby="q3" hidden>Non. Les rituels partent de gestes du quotidien et s'adaptent à chacun, quelle que soit sa sensibilité.</div></div>
-  <div class="qa"><button type="button" aria-expanded="false" aria-controls="a5" id="q5">Qu'apporte le coach perso ?<svg class="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><div class="answer" id="a5" role="region" aria-labelledby="q5" hidden>Les 21 rituels sont offerts à tous. Le coach perso relit vos fiches du soir et vous montre ce qui se dessine : les pensées qui reviennent, l'évolution de votre ressenti, un geste choisi pour vous. Vous pouvez l'essayer gratuitement au jour 5 avant de décider.</div></div>
+  <div class="qa"><button type="button" aria-expanded="false" aria-controls="a5" id="q5">Qu'apporte le coach perso ?<svg class="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><div class="answer" id="a5" role="region" aria-labelledby="q5" hidden>Tous les rituels sont offerts. Le coach perso relit vos fiches du soir et vous montre ce qui se dessine : les pensées qui reviennent, l'évolution de votre ressenti, un geste choisi pour vous. Vous pouvez l'essayer gratuitement au cinquième pas avant de décider.</div></div>
   <div class="qa"><button type="button" aria-expanded="false" aria-controls="a4" id="q4">Que devient ce que j'écris dans mon journal ?<svg class="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><div class="answer" id="a4" role="region" aria-labelledby="q4" hidden>Vos fiches sont enregistrées de façon privée pour suivre votre parcours. Elles ne sont ni publiées ni partagées. Si vous demandez une analyse, votre coach (une intelligence artificielle) les relit, uniquement avec votre accord. <span class="ph">[À REMPLIR : durée de conservation et contact pour suppression]</span></div></div>
 </section>
 
 <section class="final" id="inscription" aria-labelledby="h-final">
   <span class="eyebrow">Jour 1</span>
-  <h2 id="h-final">Vingt et un jours offerts. <em>Le premier commence demain matin.</em></h2>
-  <p style="color:var(--muted);max-width:52ch">Laissez votre adresse e-mail : chaque matin pendant 21 jours, un geste du quotidien pour revenir à vous. Au jour 5, votre coach vous offre une première lecture de vos journées.</p>
+  <h2 id="h-final">Le premier pas. <em>Demain matin.</em></h2>
+  <p style="color:var(--muted);max-width:52ch">Laissez votre adresse e-mail : chaque matin, un geste du quotidien pour revenir à vous. Rien à prévoir, rien à atteindre : juste le pas du jour. Au cinquième, votre coach vous offre une première lecture du chemin.</p>
   <form class="signup" id="signup" novalidate>
     <label for="email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Adresse e-mail</label>
     <input id="email" name="email" type="email" autocomplete="email" placeholder="votre@adresse.fr" required>
-    <button class="btn btn-primary" type="submit">Recevoir mes 21 jours offerts</button>
+    <button class="btn btn-primary" type="submit">Faire mon premier pas</button>
   </form>
   <p class="form-msg" id="formMsg" role="status"></p>
-  <a class="btn btn-ghost" id="agendaLink" href="agenda.html" hidden>Ajouter mes 21 rituels à mon agenda</a>
+  <a class="btn btn-ghost" id="agendaLink" href="agenda.html" hidden>Ajouter mes rituels à mon agenda</a>
 </section>
 
 </main>
@@ -459,18 +498,22 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
     } catch (err) {
       msg.textContent = "L'inscription n'a pas abouti (connexion impossible). Réessayez dans un instant.";
     } finally {
-      submitBtn.disabled = false; submitBtn.textContent = 'Recevoir mes 21 jours offerts';
+      submitBtn.disabled = false; submitBtn.textContent = 'Faire mon premier pas';
     }
   });
 
   /* ---------- Parcours : jour courant ---------- */
-  const dayNum = document.getElementById('dayNum'), dayBar = document.getElementById('dayBar');
+  const dayNum = document.getElementById('dayNum');
   const weeks = document.querySelectorAll('.week');
   function setDay(d){
     d = Math.max(1, Math.min(21, d));
     state.lit = d;
     dayNum.textContent = String(d).padStart(2,'0');
-    dayBar.style.width = (d/21*100) + '%';
+    document.getElementById('dayLbl').textContent = d > 1 ? 'pas posés' : 'pas posé';
+    const trail = document.getElementById('trail');
+    while (trail.children.length < d) trail.appendChild(document.createElement('i'));
+    while (trail.children.length > d) trail.lastChild.remove();
+    document.getElementById('trailEnd').classList.toggle('on', d >= 21);
     const w = d <= 7 ? 1 : d <= 14 ? 2 : 3;
     weeks.forEach(el => el.classList.toggle('on', +el.dataset.week === w));
   }
@@ -556,7 +599,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
     const R = 2.05;
     const pts = [];
     for (let i=0;i<=128;i++){ const a=i/128*Math.PI*2; pts.push(new THREE.Vector3(Math.cos(a)*R, Math.sin(a)*R, 0)); }
-    ring = new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color:colors.muted, transparent:true, opacity:.25 }));
+    ring = new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color:colors.muted, transparent:true, opacity:.08 }));
     ringGroup.add(ring);
     const pGeo = new THREE.SphereGeometry(.055, 16, 16);
     for (let i=0;i<21;i++){
@@ -617,7 +660,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
     pearls.forEach((p,i) => {
       const on = Math.max(0, Math.min(1, state.litSmooth - i));
       p.material.color.copy(dimC()).lerp(goldC(), on);
-      p.material.opacity = .45 + on*.55;
+      p.material.opacity = on;
       const k = 1 + on*.7 + (on>0 && on<1 ? .3 : 0);
       p.scale.setScalar(k);
     });
