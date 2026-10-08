@@ -153,7 +153,16 @@ const WEBHOOK_URL = 'https://n8n.srv999617.hstgr.cloud/webhook/sublimer-journal'
   $('prev').href = link(j - 1); if (j <= 1) $('prev').setAttribute('aria-disabled', 'true');
   $('next').href = link(j + 1); if (j === 21 || j >= 28) $('next').setAttribute('aria-disabled', 'true');
 
-  try { const e = localStorage.getItem('ssq_email'); if (e) $('email').value = e; } catch (err) {}
+  // Lien personnel signé : ?e=email&t=signature (reçu dans chaque e-mail), mémorisé sur l'appareil
+  let tok = '';
+  const pe = (params.get('e') || '').trim().toLowerCase(), pt = (params.get('t') || '').trim();
+  try {
+    if (pe && pt) { localStorage.setItem('ssq_email', pe); localStorage.setItem('ssq_t', pt); }
+    const e = localStorage.getItem('ssq_email'); if (e) $('email').value = e;
+    tok = localStorage.getItem('ssq_t') || '';
+  } catch (err) { if (pe) $('email').value = pe; tok = pt; }
+  if (pe && pt && history.replaceState) history.replaceState(null, '', location.pathname + '?j=' + j);
+  if (!tok) $('msg').textContent = "Pour enregistrer vos notes, ouvrez cette fiche une première fois depuis le bouton « Noter ma journée » de votre e-mail du matin.";
 
   const form = $('fiche'), msg = $('msg'), btn = $('send');
   form.addEventListener('submit', async ev => {
@@ -168,11 +177,13 @@ const WEBHOOK_URL = 'https://n8n.srv999617.hstgr.cloud/webhook/sublimer-journal'
     try { localStorage.setItem('ssq_email', email); } catch (err) {}
     try {
       const res = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, jour: j, cle: DATA.cles[String(d.cle)], fait, ressenti, remarque: $('remarque').value.trim(), pensees: $('pensees').value.trim() }) });
+        body: JSON.stringify({ email, t: tok, jour: j, cle: DATA.cles[String(d.cle)], fait, ressenti, remarque: $('remarque').value.trim(), pensees: $('pensees').value.trim() }) });
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.ok) {
         msg.textContent = 'Votre journée est notée. Merci d\'avoir pris ce temps pour vous.';
         $('remarque').value = ''; $('pensees').value = '';
+      } else if (data.error === 'lien') {
+        msg.textContent = "Ce lien n'est pas reconnu pour cette adresse. Ouvrez la fiche depuis le bouton « Noter ma journée » de votre e-mail du matin, puis réessayez.";
       } else {
         msg.textContent = "L'enregistrement n'a pas abouti. Vérifiez votre e-mail et réessayez.";
       }

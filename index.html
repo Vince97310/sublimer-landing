@@ -438,6 +438,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
   <form class="signup" id="signup" novalidate>
     <label for="email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Adresse e-mail</label>
     <input id="email" name="email" type="email" autocomplete="email" placeholder="votre@adresse.fr" required>
+    <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label for="site_web">Ne pas remplir</label><input id="site_web" name="site_web" type="text" tabindex="-1" autocomplete="off"></div>
     <button class="btn btn-primary" type="submit">Faire mon premier pas</button>
   </form>
   <p class="form-msg" id="formMsg" role="status"></p>
@@ -475,6 +476,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
   /* ---------- Formulaire (démo) ---------- */
   const form = document.getElementById('signup'), msg = document.getElementById('formMsg');
   const WEBHOOK_URL = 'https://n8n.srv999617.hstgr.cloud/webhook/sublimer-inscription';
+  const T0 = Date.now();
   const submitBtn = form.querySelector('button[type="submit"]');
   form.addEventListener('submit', async e => {
     e.preventDefault();
@@ -485,7 +487,7 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
       const res = await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: v, source: 'landing-v2' })
+        body: JSON.stringify({ email: v, source: 'landing-v2', hp: form.site_web ? form.site_web.value : '', dt: Date.now() - T0 })
       });
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.ok) {
