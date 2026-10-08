@@ -114,12 +114,25 @@ section{padding-block:var(--s7)}
 .journal .reply{border-top:1px solid var(--line);padding-top:var(--s3);font-size:.95rem;color:var(--muted)}
 .journal .tag{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-ink);font-weight:600}
 
-/* Témoignages */
-.quotes{display:grid;gap:var(--s4);margin-top:var(--s5)}
-@media (min-width:820px){.quotes{grid-template-columns:repeat(3,1fr)}}
-.quote{display:grid;gap:var(--s3);align-content:start;padding-top:var(--s4);border-top:1px solid var(--line)}
-.quote blockquote{margin:0;font-family:var(--f-display);font-size:1.35rem;line-height:1.35}
-.quote cite{font-style:normal;font-size:var(--t-sm);color:var(--muted)}
+/* Pilote automatique vs présence */
+.auto-head{display:grid;gap:var(--s5);align-items:center}
+@media (min-width:820px){.auto-head{grid-template-columns:auto 1fr}}
+.auto h2{font-size:var(--t-2xl);font-weight:400;margin-top:var(--s2)}
+.auto-lede{color:var(--muted);max-width:56ch;margin-top:var(--s3)}
+.breath{width:120px;height:120px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;position:relative}
+.breath span{width:46px;height:46px;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--gold),var(--sage));opacity:.85;animation:breathe 10s ease-in-out infinite}
+.breath::after{content:"inspirez · expirez";position:absolute;bottom:-28px;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+@keyframes breathe{0%,100%{transform:scale(1)}45%,55%{transform:scale(2.2)}}
+.moments{list-style:none;padding:0;margin:var(--s6) 0 0;display:grid;gap:var(--s4)}
+@media (min-width:700px){.moments{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1000px){.moments{grid-template-columns:repeat(3,1fr)}}
+.moment{display:grid;gap:10px;align-content:start;padding-top:var(--s3);border-top:1px solid var(--line)}
+.auto-off{color:var(--muted);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--muted) 55%,transparent);text-decoration-thickness:1px}
+.auto-on{font-family:var(--f-display);font-size:1.35rem;line-height:1.35}
+.auto-on::before{content:"→ ";color:var(--gold-ink)}
+.gift{margin:var(--s6) 0 0;padding:var(--s5) var(--s4);border-radius:var(--r);background:var(--sage-deep);color:var(--bg);max-width:900px}
+.gift p{font-family:var(--f-display);font-size:clamp(1.5rem,1.2rem + 1.2vw,2.2rem);line-height:1.3}
+.gift em{color:inherit;font-style:italic;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:6px;text-decoration-thickness:1px}
 .ph{background:color-mix(in srgb,var(--gold) 18%,transparent);color:var(--gold-ink);padding:1px 6px;border-radius:4px;font-family:var(--f-body);font-size:.8em;font-style:normal;white-space:nowrap}
 
 /* Tarifs */
@@ -275,14 +288,52 @@ footer{border-top:1px solid var(--line);padding-block:var(--s5);font-size:var(--
   </div>
 </section>
 
-<section aria-labelledby="h-quotes">
-  <span class="eyebrow">Ils ont fait les 21 jours</span>
-  <h2 id="h-quotes" style="font-size:var(--t-2xl);font-weight:400;margin-top:var(--s2)">Des gestes simples, <em>des journées différentes.</em></h2>
-  <div class="quotes">
-    <figure class="quote reveal" style="margin:0"><blockquote><span class="ph">[À REMPLIR : témoignage réel]</span></blockquote><cite>Prénom, ville <span class="ph">[À REMPLIR]</span></cite></figure>
-    <figure class="quote reveal" style="margin:0"><blockquote><span class="ph">[À REMPLIR : témoignage réel]</span></blockquote><cite>Prénom, ville <span class="ph">[À REMPLIR]</span></cite></figure>
-    <figure class="quote reveal" style="margin:0"><blockquote><span class="ph">[À REMPLIR : témoignage réel]</span></blockquote><cite>Prénom, ville <span class="ph">[À REMPLIR]</span></cite></figure>
+<section class="auto" aria-labelledby="h-auto">
+  <div class="auto-head">
+    <div class="breath" aria-hidden="true"><span></span></div>
+    <div>
+      <span class="eyebrow">Une question simple</span>
+      <h2 id="h-auto">Avez-vous pensé à respirer <em>aujourd'hui ?</em></h2>
+      <p class="auto-lede">Vous l'avez fait des milliers de fois. Sans y penser. C'est machinal. Et combien d'autres gestes de votre journée se sont faits de la même façon, sans vous ?</p>
+    </div>
   </div>
+
+  <ul class="moments">
+    <li class="moment reveal">
+      <span class="eyebrow">Dire bonjour</span>
+      <p class="auto-off">Un mot lancé en passant, les yeux déjà ailleurs.</p>
+      <p class="auto-on">Regarder la personne. Sentir que ce bonjour lui est vraiment adressé.</p>
+    </li>
+    <li class="moment reveal">
+      <span class="eyebrow">Conduire</span>
+      <p class="auto-off">Arriver à destination sans se souvenir du trajet.</p>
+      <p class="auto-on">Sentir le volant sous les mains, la route, la lumière du matin.</p>
+    </li>
+    <li class="moment reveal">
+      <span class="eyebrow">Demander des nouvelles</span>
+      <p class="auto-off">« Ça va ? » et on n'écoute pas vraiment la réponse.</p>
+      <p class="auto-on">Poser la question, puis se taire. Écouter jusqu'au bout.</p>
+    </li>
+    <li class="moment reveal">
+      <span class="eyebrow">Manger</span>
+      <p class="auto-off">Le repas avalé devant un écran, sans goût ni souvenir.</p>
+      <p class="auto-on">Trois premières bouchées en silence. Le goût revient.</p>
+    </li>
+    <li class="moment reveal">
+      <span class="eyebrow">Se lever</span>
+      <p class="auto-off">Le téléphone dans la main avant même d'avoir ouvert les yeux.</p>
+      <p class="auto-on">Les pieds au sol, une respiration, puis la journée.</p>
+    </li>
+    <li class="moment reveal">
+      <span class="eyebrow">Rentrer chez soi</span>
+      <p class="auto-off">Franchir la porte avec la journée encore sur les épaules.</p>
+      <p class="auto-on">Marquer un temps sur le seuil. Déposer, puis entrer.</p>
+    </li>
+  </ul>
+
+  <blockquote class="gift reveal">
+    <p>Le cadeau, c'est de redevenir pleinement <em>ici et maintenant.</em> Juste comme on est, pas comme on aimerait être. Avec ou sans. Se voir <em>parfaitement imparfait</em>, et imparfaitement parfait.</p>
+  </blockquote>
 </section>
 
 <section id="tarifs" aria-labelledby="h-pricing">
